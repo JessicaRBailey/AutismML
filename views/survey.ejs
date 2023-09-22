@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Survey</title>
+  <title>Autism Screening Questions</title>
 </head>
 <body>
-  <h1>Survey</h1>
+  <h1>Autism Screening Questions</h1>
   <form method="POST" action="/submit">
     <% surveyQuestions.forEach(function(question) { %>
-    <label for="<%= question %>"><%= question %>:</label>
-    <input type="text" id="<%= question %>" name="<%= question %>" required><br>
-    <% }); %>
-
-    <label for="selectedOption">Select an option:</label>
-    <select id="selectedOption" name="selectedOption">
+    <label for="selectedOption_<%= question %>"><%= question %>:</label>
+    <select id="selectedOption_<%= question %>" name="selectedOption_<%= question %>">
       <% options.forEach(function(option) { %>
         <option value="<%= option %>"><%= option %></option>
       <% }); %>
     </select>
-
+    <br>
+    <% }); %>
     <br>
     <input type="submit" value="Submit">
   </form>
 </body>
 </html>
+
+
+
+
+
+
+
