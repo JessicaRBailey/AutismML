@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey</title>
+</head>
+<body>
+  <h1>Survey</h1>
+  <form method="POST" action="/submit">
+    <% surveyQuestions.forEach(function(question) { %>
+    <label for="<%= question %>"><%= question %>:</label>
+    <input type="text" id="<%= question %>" name="<%= question %>" required><br>
+    <% }); %>
+
+    <label for="selectedOption">Select an option:</label>
+    <select id="selectedOption" name="selectedOption">
+      <% options.forEach(function(option) { %>
+        <option value="<%= option %>"><%= option %></option>
+      <% }); %>
+    </select>
+
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
