@@ -9,6 +9,7 @@
     <% surveyQuestions.forEach(function(question) { %>
     <label for="selectedOption_<%= question %>"><%= question %>:</label>
     <select id="selectedOption_<%= question %>" name="selectedOption_<%= question %>">
+      <option value="">Select an option</option> <!-- Initial empty option -->
       <% options.forEach(function(option) { %>
         <option value="<%= option %>"><%= option %></option>
       <% }); %>
@@ -20,6 +21,11 @@
   </form>
 </body>
 </html>
+
+
+
+
+
 
 
 
