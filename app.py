@@ -7,7 +7,7 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy import create_engine, func, and_
 
-from flask import Flask, jsonify, request, g
+from flask import Flask, jsonify, request, g, render_template
 
 
 #################################################
@@ -43,15 +43,15 @@ from flask import Flask, jsonify, request, g
 app = Flask(__name__)
 
 # Before each request, set the session to the global 'g' object (help from chatgpt)
-@app.before_request
-def before_request():
-    g.session = session
+# @app.before_request
+# def before_request():
+#     g.session = session
 
-# After each request, close the session
-@app.teardown_request
-def teardown_request(exception=None):
-    if hasattr(g, 'session'):
-        g.session.close()
+# # After each request, close the session
+# @app.teardown_request
+# def teardown_request(exception=None):
+#     if hasattr(g, 'session'):
+#         g.session.close()
 
 
 #################################################
@@ -75,20 +75,7 @@ def welcome():
 
 @app.route("/about")
 def about():
-    most_recent_date, one_year_earlier_date = get_date_ranges()
-
-    recent_year_data = g.session.query(measurements.date, measurements.prcp).\
-        filter(and_(measurements.date >= one_year_earlier_date,
-                    measurements.date <= most_recent_date)).all()
-
-    all_precipitations = []
-    for date, prcp in recent_year_data:
-        precipitation_dict = {}
-        precipitation_dict["date"] = date
-        precipitation_dict["precipitation"] = prcp
-        all_precipitations.append(precipitation_dict)
-
-    return jsonify(all_precipitations)
+    return render_template("about.html")
 
 #################################################
 # Survey Page
@@ -96,19 +83,7 @@ def about():
 
 @app.route("/survey")
 def survey():
-
-    # Query all stations
-    station_query = g.session.query(stations).all()
-
-    # Create a list of dictionaries for all stations
-    all_stations = []
-    for station in station_query:
-        station_dict = {}
-        station_dict["station"] = station.station
-        station_dict["name"] = station.name
-        all_stations.append(station_dict)
-
-    return jsonify(all_stations)
+    return "Survey Page"
 
 #################################################
 # Results Page
@@ -116,27 +91,8 @@ def survey():
 
 @app.route("/results")
 def results():
-    
-    return 
+    return "Results Page"
 
-
-#################################################
-# Another Page?
-#################################################
-
-@app.route("/api/v1.0/<start>")
-def temp_stats1(start):
-    
-    return 
-
-#################################################
-# Another Page?
-#################################################
-
-@app.route("/api/v1.0/<start>/<end>")
-def temp_stats2(start,end):
-    
-    return jsonify(most_active_station_temps)
 
 
 
