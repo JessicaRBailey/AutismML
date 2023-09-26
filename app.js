@@ -4,9 +4,10 @@ const port = 3000;
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+// Use EJS as the view engine
 app.set('view engine', 'ejs');
 
-// Survey questions
+// Define the survey questions
 const surveyQuestions = [
   'Does your child look at you when you call his/her name?',
   'How easy is it for you to get eye contact with your child?',
@@ -18,7 +19,6 @@ const surveyQuestions = [
   'Would you describe your child\'s first words as:',
   'Does your child use simple gestures? (e.g. wave goodbye)',
   'Does your child stare at nothing with no apparent purpose?',
-  'How many months old is your child?',
 ];
 
 // Parse the data
@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
   const surveyData = {};
 
-  surveyQuestions.forEach((question) => {
+  surveyQuestions.forEach((question, index) => {
     const selectedOption = req.body[`selectedOption_${question}`];
     
     // Adjust the mapping only for the question "Does your child stare at nothing with no apparent purpose"
@@ -39,15 +39,14 @@ app.post('/submit', (req, res) => {
     if (question === 'Does your child stare at nothing with no apparent purpose') {
       mappedValue = 1 - mappedValue; 
     }
-
-    // Map the "How many months old is your child?" question
-    if (question === 'How many months old is your child?') {
-      const childAgeMonths = req.body['childAgeMonths'];
-      surveyData[question] = { selectedOption: childAgeMonths };
-    } else {
-      surveyData[question] = { selectedOption: mappedValue };
-    }
+    
+    // Store the mapped response as an integer in the JSON object
+    surveyData[index + 1] = mappedValue;
   });
+
+  // Store the response for "How many months old is your child?" in the JSON object
+  const childAgeMonths = req.body.childAgeMonths;
+  surveyData['11'] = childAgeMonths;
 
   // Store surveyData in a JSON file
   const filePath = 'resources/survey_responses.json';
@@ -56,7 +55,7 @@ app.post('/submit', (req, res) => {
     if (!err) {
       responsesArray = JSON.parse(data);
     }
-    surveyData['timestamp'] = new Date(); // Include a timestamp for each response
+    surveyData['timestamp'] = new Date(); 
     responsesArray.push(surveyData);
 
     // Write the data back to the file
@@ -72,7 +71,4 @@ app.post('/submit', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-
-
 
