@@ -1,40 +1,11 @@
 # Import the dependencies.
 import os
 import numpy as np
-import datetime as dt
-import sqlalchemy
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session, sessionmaker
-from sqlalchemy import create_engine, func, and_
 
+import sqlite3
+from keras.models import load_model
+import joblib
 from flask import Flask, jsonify, request, g, render_template
-
-
-#################################################
-# Database Setup
-#################################################
-# sqlpath = os.path.abspath("C:/Users/Jessi/Desktop/Data Analytics Bootcamp/Challenges/Challenge_10/sqlalchemy-challenge/SurfsUp/Resources/hawaii.sqlite")
-# engine = create_engine(f"sqlite:///{sqlpath}")  
-
-# # reflect an existing database into a new model
-# Base = automap_base()
-# # reflect the tables
-# Base.prepare(autoload_with=engine)
-
-# # Save references to each table
-# measurements = Base.classes.measurement
-# stations = Base.classes.station
-
-# # Create our session (link) from Python to the DB
-# # session = Session(engine)
-# SessionClass = sessionmaker(bind=engine)
-# session = SessionClass()
-
-# def get_date_ranges():
-#     most_recent_date = session.query(func.max(measurements.date)).scalar()
-#     most_recent_date = dt.datetime.strptime(most_recent_date, '%Y-%m-%d')  # Convert to datetime
-#     one_year_earlier_date = most_recent_date - dt.timedelta(days=365)
-#     return most_recent_date, one_year_earlier_date
 
 
 #################################################
@@ -42,16 +13,9 @@ from flask import Flask, jsonify, request, g, render_template
 #################################################
 app = Flask(__name__)
 
-# Before each request, set the session to the global 'g' object (help from chatgpt)
-# @app.before_request
-# def before_request():
-#     g.session = session
-
-# # After each request, close the session
-# @app.teardown_request
-# def teardown_request(exception=None):
-#     if hasattr(g, 'session'):
-#         g.session.close()
+# Load the saved neural network model and StandardScaler during application startup
+model = load_model('Resources/QChatNN_for_new_survey.h5')
+scaler = joblib.load('Resources/scaler.joblib')
 
 
 #################################################
@@ -59,15 +23,7 @@ app = Flask(__name__)
 #################################################
 @app.route("/")
 def welcome():
-    """List all available api routes."""
-    return (
-        f"Available Routes:<br/><br/>"
-        f"/api/v1.0/precipitation<br/>     Shows precipitation readings for the last 12 months recorded for all stations.<br/><br/>"
-        f"/api/v1.0/stations<br/>     Shows Station names and id numbers.<br/><br/>"  
-        f"/api/v1.0/tobs<br/>     Shows temperature readings for the last 12 months recorded for the station with the most observations - Waihee Station.<br/><br/>"
-        f"/api/v1.0/DATE<br/>     Shows the minimum temperature, maximum temperature, and average temperature at Waihee Station from selected date to 8/23/17. <br/> Replace 'DATE' with your own date in the format year-month-day.  For example, /api/v1.0/2010-1-16.<br/><br/>"
-        f"/api/v1.0/DATE/DATE<br/>     Shows the minimum temperature, maximum temperature, and average temperature at Waihee Station from first selected date through second selected date. <br/>Replace each 'DATE' with your own start and end dates in the format year-month-day.  For example, /api/v1.0/2011-9-1/2012-8-7."
-    )
+    return render_template("index.html")
 
 #################################################
 # About the survey page
@@ -91,7 +47,41 @@ def survey():
 
 @app.route("/results")
 def results():
-    return "Results Page"
+    try:
+        # Connect to the SQLite database
+        conn = sqlite3.connect('survey_responses.db')
+        cursor = conn.cursor()
+
+        # Query to retrieve the last entry based on the 'Timestamp' column
+        cursor.execute('SELECT A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Age_Mons FROM survey_responses ORDER BY Timestamp DESC LIMIT 1')
+
+        # Fetch the result (should be one row, the last entry)
+        last_entry = cursor.fetchone()
+
+        # Close the database connection
+        conn.close()
+
+        input_data = last_entry
+        # QChat_df['A10'] = 1 - QChat_df['A10']
+
+        # Convert the input data to a NumPy array
+        input_data = np.array(input_data)
+        
+        # Reshape the input data to be 2D (1 row and n_features columns)
+        input_data = input_data.reshape(1, -1)  # -1 automatically computes the number of columns
+
+        # Use the loaded StandardScaler to scale the input data
+        input_data_scaled = scaler.transform(input_data)
+
+        # Make predictions using the model
+        predictions = model.predict(input_data_scaled)
+
+        # Render an HTML template with the predicted results
+        return render_template("results.html", predictions=predictions)
+
+    except Exception as e:
+        # Handle exceptions, e.g., file not found or database query issues
+        return f"An error occurred: {str(e)}"
 
 
 
