@@ -25,13 +25,6 @@ scaler = joblib.load('Resources/scaler.joblib')
 def welcome():
     return render_template("index.html")
 
-#################################################
-# About the survey page
-#################################################
-
-@app.route("/about")
-def about():
-    return render_template("about.html")
 
 #################################################
 # Survey Page
