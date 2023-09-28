@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Survey</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <h1>Survey</h1>
+  <form method="POST" action="/submit">
+    <% surveyQuestions.forEach(function(question) { %>
+    <label for="selectedOption_<%= question %>"><%= question %>:</label>
+    <select id="selectedOption_<%= question %>" name="selectedOption_<%= question %>">
+      <option value="">Select an option</option>
+      <option value="Always">Always</option>
+      <option value="Usually">Usually</option>
+      <option value="Sometimes">Sometimes</option>
+      <option value="Rarely">Rarely</option>
+      <option value="Never">Never</option>
+    </select>
+    <br>
+    <% }); %>
+
+    <label for="childAgeMonths">How many months old is your child?:</label>
+    <select id="childAgeMonths" name="childAgeMonths">
+      <option value="">Select an option</option>
+      <% for (var i = 12; i <= 36; i++) { %>
+        <option value="<%= i %>"><%= i %> months</option>
+      <% } %>
+    </select>
+    
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
