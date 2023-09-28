@@ -1,8 +1,8 @@
 import sqlite3
 import csv
 import os
-# import matplotlib.pyplot as plt
-# import pandas as pd
+import matplotlib.pyplot as plt
+import pandas as pd
 
 # Define the name of your SQLite database file.
 database_name = "SQLITE.db"
@@ -62,7 +62,7 @@ with open(csv_file_path, "r") as file:
 conn.commit()
 conn.close()
 
-print(f"Data from {csv_file_path} has been imported into {database_name}.")
+# print(f"Data from {csv_file_path} has been imported into {database_name}.")
 #################################################################################
 
 # Define the name of your SQLite database file.
@@ -91,28 +91,26 @@ for row in rows:
     print(row)
 
 
-
 ##################################################################################
 
 
-# # Define the name of your SQLite database file.
-# database_name = "SQLITE.db"
+# Define the name of your SQLite database file.
+database_name = "SQLITE.db"
 
-# # Create a SQLite database connection.
-# conn = sqlite3.connect(database_name)
+# Create a SQLite database connection.
+conn = sqlite3.connect(database_name)
 
-# # Define the name of the table you want to query.
-# table_name = "sample"
+# Define the name of the table you want to query.
+table_name = "sample"
 
-# # Use Pandas to read the table data into a DataFrame.
-# df = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
+# Use Pandas to read the table data into a DataFrame.
+df_01 = pd.read_sql_query(f"SELECT * FROM {table_name}", conn)
 
-# # Close the database connection.
-# conn.close()
+# Close the database connection.
+conn.close()
 
-# # Display the DataFrame.
-# df
-
+# Display the DataFrame.
+print(df_01)
 
 
 
