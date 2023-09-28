@@ -2,7 +2,6 @@
 import sqlite3
 import csv
 import os
-import matplotlib.pyplot as plt
 import pandas as pd
 
 # Define the name of your SQLite database file with the full path.
