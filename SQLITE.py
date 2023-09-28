@@ -1,14 +1,15 @@
+
 import sqlite3
 import csv
 import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# Define the name of your SQLite database file.
-database_name = "SQLITE.db"
+# Define the name of your SQLite database file with the full path.
+database_name = os.path.join("Resources", "SQLITE.db")
 
 # Define the path to the CSV file located within the "Resources" folder.
-csv_file_path = os.path.join("Resources\Toddler Autism dataset July 2018.csv")
+csv_file_path = os.path.join("Resources", "Toddler Autism dataset July 2018.csv")
 
 # Create a SQLite database connection.
 conn = sqlite3.connect(database_name)
@@ -66,7 +67,7 @@ conn.close()
 #################################################################################
 
 # Define the name of your SQLite database file.
-database_name = "SQLITE.db"
+database_name = os.path.join("Resources", "SQLITE.db")
 
 # Create a SQLite database connection.
 conn = sqlite3.connect(database_name)
@@ -95,7 +96,7 @@ for row in rows:
 
 
 # Define the name of your SQLite database file.
-database_name = "SQLITE.db"
+database_name = os.path.join("Resources", "SQLITE.db")
 
 # Create a SQLite database connection.
 conn = sqlite3.connect(database_name)
@@ -111,9 +112,6 @@ conn.close()
 
 # Display the DataFrame.
 print(df_01)
-
-
-
 
 
 
