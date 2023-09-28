@@ -46,26 +46,4 @@
             <ul>
                 <li>The script creates an SQLite database if it doesn't exist and creates a table with specified columns
                     to store the data.</li>
-                <li>It imports data from the CSV file into the SQLite table, skipping the header row.</li>
-            </ul>
-        </li>
-
-        <li><strong>Data Retrieval and Visualization</strong>
-            <ul>
-                <li>The script retrieves data from the SQLite database and displays it in a readable format.</li>
-                <li>Data visualization using Matplotlib is supported but commented out. Uncomment the appropriate lines
-                    to enable data visualization.</li>
-            </ul>
-        </li>
-    </ol>
-
-    <h2>Customization</h2>
-    <p>You can customize the script to work with different CSV files by changing the <code>csv_file_path</code>
-        variable and the table structure.</p>
-    <p>Modify the code for data visualization to suit your specific needs.</p>
-
-    <h2>License</h2>
-    <p>This script is provided under the <a href="LICENSE.md">MIT License</a>.</p>
-</body>
-
-</html>
+                <li
