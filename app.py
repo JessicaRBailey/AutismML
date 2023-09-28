@@ -14,7 +14,7 @@ from flask import Flask, jsonify, request, g, render_template
 app = Flask(__name__)
 
 # Load the saved neural network model and StandardScaler during application startup
-model = load_model('Resources/QChatNN_for_new_survey.h5')
+model = load_model('Resources/QChatNN_for_new_survey.h5', compile=False)
 scaler = joblib.load('Resources/scaler.joblib')
 
 
