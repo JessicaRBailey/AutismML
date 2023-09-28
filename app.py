@@ -49,7 +49,7 @@ def survey():
 def results():
     try:
         # Connect to the SQLite database
-        conn = sqlite3.connect('survey_responses.db')
+        conn = sqlite3.connect('Resources/survey_responses.db')
         cursor = conn.cursor()
 
         # Query to retrieve the last entry based on the 'Timestamp' column
