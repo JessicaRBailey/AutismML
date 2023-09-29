@@ -173,15 +173,16 @@ def results():
         # Make predictions using the model
         predictions = model.predict(input_data_scaled)
 
+        # Check the prediction value and decide the message
+        prediction_value = predictions[0][0]
+        message = "Your child may be at risk for autism." if prediction_value >= 0.75 else "It does not appear that your child is showing signs of autism at this time."
+
         # Render an HTML template with the predicted results
-        return render_template("results.html", predictions=predictions)
+        return render_template("results.html", message=message)
 
     except Exception as e:
         # Handle exceptions, e.g., file not found or database query issues
         return f"An error occurred: {str(e)}"
-
-
-
 
 if __name__ == '__main__':
     app.run(debug=True)
