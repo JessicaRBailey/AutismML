@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Survey Questions</title>
+    <style>
+        body {
+            padding-left: 20px; /* Add padding to the left side */
+        }
+        .instructions {
+            padding: 10px 0; /* Add padding to the top and bottom of the instructions */
+        }
+    </style>
+</head>
+<body>
+    <div class="instructions">
+        <h2>Instructions: Please answer the following questions for your toddler.</h2>
+    </div>
+    <form method="POST" action="/survey">
+        {% for question in surveyQuestions %}
+        <div class="question">
+            <p>{{ question }}</p>
+            {% if loop.index == 11 %}
+            <select name="option_{{ loop.index }}">
+                {% for age in range(12, 37) %}
+                <option value="{{ age }}">{{ age }}</option>
+                {% endfor %}
+            </select>
+            {% else %}
+            <select name="option_{{ loop.index }}">
+                {% for option in optionList %}
+                <option value="{{ option[0] }}">{{ option[1] }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
+
+
+
+

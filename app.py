@@ -1,10 +1,11 @@
 # Import the dependencies.
 import os
 import numpy as np
-
 import sqlite3
 from keras.models import load_model
 import joblib
+import json
+import datetime
 from flask import Flask, jsonify, request, g, render_template
 
 
@@ -29,10 +30,74 @@ def welcome():
 #################################################
 # Survey Page
 #################################################
-
-@app.route("/survey")
+@app.route("/survey", methods=['GET', 'POST'])
+    
 def survey():
-    return "Survey Page"
+    surveyQuestions = [
+        'Does your child look at you when you call his/her name?',
+        'How easy is it for you to get eye contact with your child?',
+        'Does your child point to indicate that s/he wants something?',
+        'Does your child point to share interest with you? (e.g. a toy that is out of reach)',
+        'Does your child pretend? (e.g. care for dolls, talk on a toy phone)',
+        'Does your child follow where you are looking?',
+        'If you or someone else in the family is visibly upset, does your child show signs of wanting to comfort them?',
+        'Would you describe your child\'s first words as:',
+        'Does your child use simple gestures? (e.g. wave goodbye)',
+        'Does your child stare at nothing with no apparent purpose?',
+        'How old is your child (in months)']
+    
+    if request.method == 'POST':
+        # Create a dictionary to store survey responses
+        survey_responses = {}
+        
+        # Loop through the form data to collect responses
+        for i in range(1, 12):
+            response_key = str(i)
+            response_value = request.form.get("option_" + response_key)
+            
+            # For questions 1 to 10, calculate the value based on "Always," "Usually," "Sometimes," "Rarely," and "Never"
+            if i != 11:
+                if response_value in ("1", "2", "3"):
+                    survey_responses[response_key] = 1
+                elif response_value in ("4", "5"):
+                    survey_responses[response_key] = 0
+                else:
+                    # Handle unexpected values or errors here
+                    pass
+            else:
+                # For question 11, store the exact age value as a string
+                survey_responses[response_key] = response_value
+        
+        # Add a timestamp to the survey_responses dictionary
+        survey_responses["timestamp"] = datetime.datetime.utcnow().isoformat() + "Z"
+        
+        # Check if the JSON file already exists
+        json_filename = 'Resources/survey_responses.json'
+        if os.path.exists(json_filename):
+            # Load existing data from the JSON file
+            with open(json_filename, 'r') as json_file:
+                existing_responses = json.load(json_file)
+        else:
+            existing_responses = []
+        
+        # Append the new survey responses to the existing data
+        existing_responses.append(survey_responses)
+        
+        # Save the updated JSON data to the file
+        with open(json_filename, 'w') as json_file:
+            json.dump(existing_responses, json_file, indent=4)
+    
+    conn = sqlite3.connect('Resources/survey_options.db')
+    cursor = conn.cursor()
+
+    optionList = cursor.execute("SELECT option_id, option_name FROM survey_options ORDER BY option_id").fetchall()
+
+    # Close the database connection
+    conn.close()
+    
+    return render_template("survey.html", surveyQuestions=surveyQuestions, optionList=optionList)
+
+
 
 #################################################
 # Results Page
