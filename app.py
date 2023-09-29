@@ -6,7 +6,7 @@ from keras.models import load_model
 import joblib
 import json
 import datetime
-from flask import Flask, jsonify, request, g, render_template
+from flask import Flask, jsonify, request, g, render_template, redirect, url_for
 
 
 #################################################
@@ -56,7 +56,15 @@ def survey():
             response_value = request.form.get("option_" + response_key)
             
             # For questions 1 to 10, calculate the value based on "Always," "Usually," "Sometimes," "Rarely," and "Never"
-            if i != 11:
+            if i != 10:
+                if response_value in ("3", "4", "5"):
+                    survey_responses[response_key] = 1
+                elif response_value in ("1", "2"):
+                    survey_responses[response_key] = 0
+                else:
+                    # Handle unexpected values or errors here
+                    pass
+            elif i == 10:
                 if response_value in ("1", "2", "3"):
                     survey_responses[response_key] = 1
                 elif response_value in ("4", "5"):
@@ -86,6 +94,8 @@ def survey():
         # Save the updated JSON data to the file
         with open(json_filename, 'w') as json_file:
             json.dump(existing_responses, json_file, indent=4)
+            
+        return redirect(url_for('results'))
     
     conn = sqlite3.connect('Resources/survey_options.db')
     cursor = conn.cursor()
