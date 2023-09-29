@@ -27,16 +27,19 @@
 
                     </h1>
                     <p>Disclaimer: The QChat10 is not a diagnostic tool.  It cannot tell you if your toddler has or does not have Autism Spectrum Disorder.  In addition, the result shown below is predicted using a machine learning algorithm that was created by students for a class project, not trained medical professionals.  If you are concerned with your child's development, we encourage you to discuss your observations with your child's doctor.</p>
-                    <p class="lead my-4 text-muted">
-                        <ul>
-                            {% for prediction in predictions %}
-                            <li>{{ prediction }}</li>
-                            {% endfor %}
-                            <li>text</li>
-                            <li>text</li>
-                        </ul>
+                    <p class="lead my-4 text-muted">{{ message }}</p>
                     </p>
                     <a href="/survey" class="btn btn-secondary btn-lg">Complete the QChat10 for another child</a>
+                    
+                    <p class="resources" style="margin-top: 60px;">Additional Resources:</p>
+                    <ul>
+                        <li><a href="https://autismnow.org/browse-by-topic/" target="_blank">Different Topics within the Autism Space</a></li>
+                        <li><a href="https://www.aacap.org/AACAP/Families_and_Youth/Resource_Centers/Autism_Resource_Center/Home.aspx" target="_blank">Frequently Asked Questions</a></li>
+                        <li><a href="https://autismsciencefoundation.org/the-autism-journey/" target="_blank">The Autism Journey</a></li>
+                        <li><a href="https://nationalautismassociation.org/store/#!/First-Signs-Next-Steps-Toolkit/p/82721262/category=0" target="_blank">Free Toolkit</a></li>
+                        <li><a href="https://www.cdc.gov/ncbddd/autism/index.html" target="_blank">Center for Disease Control and Prevention</a></li>
+                        <li><a href="https://researchautism.org" target="_blank">Organization for Autism Research</a></li>
+                    </ul>
                 </div>
                 <div class="col-md-5 text-center d-none d-md-block">
                     <img class="img-fluid" src="../static/images/1 in 36 children 2023 master graphic rgb.png" alt="autisn prevalence">
