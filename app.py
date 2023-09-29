@@ -2,7 +2,9 @@
 import os
 import numpy as np
 import sqlite3
+import tensorflow as tf
 from keras.models import load_model
+from sklearn.preprocessing import StandardScaler
 import joblib
 import json
 import datetime
@@ -55,8 +57,8 @@ def survey():
             response_key = str(i)
             response_value = request.form.get("option_" + response_key)
             
-            # For questions 1 to 10, calculate the value based on "Always," "Usually," "Sometimes," "Rarely," and "Never"
-            if i != 10:
+            # For questions 1 to 9, calculate the value based on "Always," "Usually," "Sometimes," "Rarely," and "Never"
+            if i < 10:
                 if response_value in ("3", "4", "5"):
                     survey_responses[response_key] = 1
                 elif response_value in ("1", "2"):
@@ -72,7 +74,7 @@ def survey():
                 else:
                     # Handle unexpected values or errors here
                     pass
-            else:
+            elif i == 11:
                 # For question 11, store the exact age value as a string
                 survey_responses[response_key] = response_value
         
@@ -95,6 +97,33 @@ def survey():
         with open(json_filename, 'w') as json_file:
             json.dump(existing_responses, json_file, indent=4)
             
+        # Update survey_responses database table with new survey
+        conn = sqlite3.connect('Resources/survey_responses.db')  
+        cursor = conn.cursor()
+
+        # Prepare the SQL INSERT statement
+        insert_sql = """
+            INSERT INTO survey_responses (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Age_Mons, timestamp)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """
+        
+        # Get the values from the survey_responses dictionary
+        values = (
+            survey_responses['1'], survey_responses['2'], survey_responses['3'],
+            survey_responses['4'], survey_responses['5'], survey_responses['6'],
+            survey_responses['7'], survey_responses['8'], survey_responses['9'],
+            survey_responses['10'], survey_responses['11'], survey_responses['timestamp']
+        )
+
+        # Execute the SQL INSERT statement with the values
+        cursor.execute(insert_sql, values)
+
+        # Commit the transaction to save the changes
+        conn.commit()
+
+        # Close the database connection
+        conn.close()   
+        
         return redirect(url_for('results'))
     
     conn = sqlite3.connect('Resources/survey_options.db')
