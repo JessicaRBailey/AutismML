@@ -130,11 +130,20 @@ def survey():
     cursor = conn.cursor()
 
     optionList = cursor.execute("SELECT option_id, option_name FROM survey_options ORDER BY option_id").fetchall()
+    AlwaysOptionList = cursor.execute("SELECT option_id, option_name FROM always_options ORDER BY option_id").fetchall()
+    EasyOptionList = cursor.execute("SELECT option_id, option_name FROM easy_options ORDER BY option_id").fetchall()
+    TimesOptionList = cursor.execute("SELECT option_id, option_name FROM times_options ORDER BY option_id").fetchall()
+    TypicalOptionList = cursor.execute("SELECT option_id, option_name FROM typical_options ORDER BY option_id").fetchall()
 
     # Close the database connection
     conn.close()
     
-    return render_template("survey.html", surveyQuestions=surveyQuestions, optionList=optionList)
+    return render_template("survey.html", 
+                           surveyQuestions=surveyQuestions, 
+                           AlwaysOptionList=AlwaysOptionList, 
+                           EasyOptionList=EasyOptionList,
+                           TimesOptionList=TimesOptionList,
+                           TypicalOptionList=TypicalOptionList)
 
 
 
