@@ -382,6 +382,45 @@
         </div>
     </section>
 
+
+     
+    <!-- adding survey questions -->
+    <section id="survey">
+        <div class="container-lg">
+          
+          <div class="text-center">
+            <h2>Survey Questions</h2>
+            <p class="lead">Instructions: Please answer the following questions for your toddler.</p>
+          </div>
+          <div class="row justify-content-center my-5">
+            <div class="col-lg-6">
+              
+                <form method="POST" action="/survey">
+                    {% for question in surveyQuestions %}
+                    <div class="question">
+                        <p>{{ question }}</p>
+                        {% if loop.index == 11 %}
+                        <select name="option_{{ loop.index }}">
+                            {% for age in range(12, 37) %}
+                            <option value="{{ age }}">{{ age }}</option>
+                            {% endfor %}
+                        </select>
+                        {% else %}
+                        <select name="option_{{ loop.index }}">
+                            {% for option in optionList %}
+                            <option value="{{ option[0] }}">{{ option[1] }}</option>
+                            {% endfor %}
+                        </select>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- This section is dedicated to the analysis and visualization of additional characteristics for ASD screening. -->
     <section id="Analysis" class="bg-light mt-5">
         <div class="container-lg">

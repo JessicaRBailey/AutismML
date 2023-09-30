@@ -1,44 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <!-- Meta tags for character set, compatibility, and viewport settings -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Linking Bootstrap CSS from a CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
     <title>Survey Questions</title>
     <style>
-        body {
-            padding-left: 20px; /* Add padding to the left side */
-        }
-        .instructions {
-            padding: 10px 0; /* Add padding to the top and bottom of the instructions */
-        }
+      body {
+        padding-left: 20px; /* Add padding to the left side */
+      }
+      .instructions {
+        padding: 10px 0; /* Add padding to the top and bottom of the instructions */
+      }
     </style>
-</head>
-<body>
-    <div class="instructions">
-        <h2>Instructions: Please answer the following questions for your toddler.</h2>
-    </div>
-    <form method="POST" action="/survey">
-        {% for question in surveyQuestions %}
-        <div class="question">
-            <p>{{ question }}</p>
-            {% if loop.index == 11 %}
-            <select name="option_{{ loop.index }}">
+  </head>
+  <body>
+    <div class="container-lg">
+      <div class="text-center">
+        <h2>Survey Questions</h2>
+        <p class="lead">
+          Instructions: Please answer the following questions for your toddler.
+        </p>
+      </div>
+      <div class="row justify-content-center my-5">
+        <div class="col-lg-6">
+          <form method="POST" action="/survey">
+            {% for question in surveyQuestions %}
+            <div class="question">
+              <p>{{ question }}</p>
+              {% if loop.index == 11 %}
+              <select name="option_{{ loop.index }}">
                 {% for age in range(12, 37) %}
                 <option value="{{ age }}">{{ age }}</option>
                 {% endfor %}
-            </select>
-            {% else %}
-            <select name="option_{{ loop.index }}">
+              </select>
+              {% else %}
+              <select name="option_{{ loop.index }}">
                 {% for option in optionList %}
                 <option value="{{ option[0] }}">{{ option[1] }}</option>
                 {% endfor %}
-            </select>
-            {% endif %}
+              </select>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <input type="submit" value="Submit" />
+          </form>
         </div>
-        {% endfor %}
-        <input type="submit" value="Submit">
-    </form>
-</body>
+      </div>
+    </div>
+  </body>
 </html>
-
-
-
-
