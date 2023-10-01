@@ -48,14 +48,7 @@ We employ a combination of supervised learning techniques and neural network mod
 
 
 
-## Usage
-Critical components used for the project.
-
-### CSV to SQLite Database Converter
-
-This Python script is designed to import data from a CSV file into an SQLite database and retrieve and display the data from the database. It uses the Pandas library for data manipulation and Matplotlib for data visualization.
-
-#### Requirements
+## Requirements
 
 - Python 3.x
 - Required Python packages (install using pip install package_name):
@@ -65,18 +58,24 @@ This Python script is designed to import data from a CSV file into an SQLite dat
 - TensorFlow
 - Cborn
 
-#### Configuration
+## CSV to SQLite Database Converter
+
+This Python script is designed to import data from a CSV file into an SQLite database and retrieve and display the data from the database. It uses the Pandas library for data manipulation and Matplotlib for data visualization.
+
+
+
+### Configuration
 
 - Ensure that your SQLite database file name is set as SQLITE.db. You can change this name in the database_name variable if needed.
 - Make sure the CSV file you want to import is located within the "Resources" folder. You can change the file path in the csv_file_path variable if necessary.
 
 
-#### Data Import
+### Data Import
 
 The script creates an SQLite database if it doesn't exist and creates a table with specified columns to store the data.
 It imports data from the CSV file into the SQLite table, skipping the header row.
 
-#### Data Retrieval and Visualization
+### Data Retrieval and Visualization
 
 The script retrieves data from the SQLite database and displays it in a readable format.
 Data visualization using Matplotlib is supported but commented out. Uncomment the appropriate lines to enable data visualization.
