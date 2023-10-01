@@ -34,27 +34,37 @@
       </div>
       <div class="row justify-content-center my-5">
         <div class="col-lg-6">
-          <form method="POST" action="/survey">
-            {% for question in surveyQuestions %}
-            <div class="question">
-              <p>{{ question }}</p>
-              {% if loop.index == 11 %}
-              <select name="option_{{ loop.index }}">
-                {% for age in range(12, 37) %}
-                <option value="{{ age }}">{{ age }}</option>
+            <form method="POST" action="/survey">
+                {% for question in surveyQuestions %}
+                <div class="question">
+                    <p>{{ question }}</p>
+                    <select name="option_{{ loop.index }}">
+                        {% if loop.index == 1 or loop.index == 7 %}
+                        {% for option in AlwaysOptionList %}
+                        <option value="{{ option[0] }}">{{ option[1] }}</option>
+                        {% endfor %}
+                        {% elif loop.index == 2 %}
+                        {% for option in EasyOptionList %}
+                        <option value="{{ option[0] }}">{{ option[1] }}</option>
+                        {% endfor %}
+                        {% elif loop.index in [3, 4, 5, 6, 9, 10] %}
+                        {% for option in TimesOptionList %}
+                        <option value="{{ option[0] }}">{{ option[1] }}</option>
+                        {% endfor %}
+                        {% elif loop.index == 8 %}
+                        {% for option in TypicalOptionList %}
+                        <option value="{{ option[0] }}">{{ option[1] }}</option>
+                        {% endfor %}
+                        {% elif loop.index == 11 %}
+                        {% for age in range(12, 37) %}
+                        <option value="{{ age }}">{{ age }}</option>
+                        {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
                 {% endfor %}
-              </select>
-              {% else %}
-              <select name="option_{{ loop.index }}">
-                {% for option in optionList %}
-                <option value="{{ option[0] }}">{{ option[1] }}</option>
-                {% endfor %}
-              </select>
-              {% endif %}
-            </div>
-            {% endfor %}
-            <input type="submit" value="Submit" />
-          </form>
+                <input type="submit" value="Submit">
+            </form>
         </div>
       </div>
     </div>
