@@ -14,17 +14,16 @@ We employ a combination of supervised learning techniques and neural network mod
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
 - [Usage](#usage)
   - [CSV to SQLite Database Converter](#csv-to-sqlite-database-converter)
 - [Data](#data)
 - [Machine Learning](#machine-learning)
 - [Data Visualization](#data-visualization)
-- [target audience] 
 - [Website](#website)
-- [License](#license)
+
 
 ## Project Overview
+
 
 
 
@@ -98,8 +97,6 @@ Information gained from machine learning
 
 how we used the visualizations
 
-Target Audience
-## The primary function of the website and target of the website
 
 ## Website
 
