@@ -124,15 +124,15 @@ def survey():
 @app.route("/results")
 def results():
     try:
-        # Connect to the SQLite database
+        # Connect to the SQLite database and get the most recent submission
         conn = sqlite3.connect('Resources/survey_responses.db')
         cursor = conn.cursor()
         # Query to retrieve the last entry based on the 'Timestamp' column
         cursor.execute('SELECT A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Age_Mons FROM survey_responses ORDER BY Timestamp DESC LIMIT 1')
         # Fetch the result (should be one row, the last entry)
         last_entry = cursor.fetchone()
-        # Close the database connection
-        conn.close()
+
+        # Use the neural network model on the most recent submission to predict ASD
         input_data = last_entry
         # QChat_df['A10'] = 1 - QChat_df['A10']
         # Convert the input data to a NumPy array
@@ -145,8 +145,19 @@ def results():
         predictions = model.predict(input_data_scaled)
         # Check the prediction value and decide the message
         prediction_value = predictions[0][0]
-        message = "Your child may be at risk for autism." if prediction_value >= 0.75 else "It does not appear that your child is showing signs of autism at this time."
+        message = "Your child may be at risk for autism." if prediction_value >= 0.5 else "It does not appear that your child is showing signs of autism at this time."
         # Render an HTML template with the predicted results
+        
+        # Update the prediction value in the database
+        cursor.execute('''
+            UPDATE survey_responses
+            SET prediction = ?
+            WHERE Timestamp = (SELECT MAX(Timestamp) FROM survey_responses)
+        ''', (prediction_value,))
+        conn.commit()
+        # Close the database connection
+        conn.close()
+        
         return render_template("results.html", message=message)
     except Exception as e:
         # Handle exceptions, e.g., file not found or database query issues
