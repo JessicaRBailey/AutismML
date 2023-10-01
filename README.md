@@ -14,8 +14,7 @@ We employ a combination of supervised learning techniques and neural network mod
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Usage](#usage)
-  - [CSV to SQLite Database Converter](#csv-to-sqlite-database-converter)
+- [CSV to SQLite Database Converter](#csv-to-sqlite-database-converter)
 - [Data](#data)
 - [Machine Learning](#machine-learning)
 - [Data Visualization](#data-visualization)
@@ -40,23 +39,18 @@ We employ a combination of supervised learning techniques and neural network mod
 
 ## Technologies Used
 
-- Python
+- Python 3.x
+    - Required Python packages (install using pip install package_name):
+        - sqlite3: To work with SQLite databases.
+        - pandas: For data manipulation and retrieval.
+        - matplotlib: For data visualization
 - Tableau
 - Html/Css
 - Bootstrap
 - Sql
-
-
-
-## Requirements
-
-- Python 3.x
-- Required Python packages (install using pip install package_name):
-  - sqlite3: To work with SQLite databases.
-  - pandas: For data manipulation and retrieval.
-  - matplotlib: For data visualization (commented out but can be uncommented for use).
-- TensorFlow
+- Tensorflow
 - Cborn
+
 
 ## CSV to SQLite Database Converter
 
