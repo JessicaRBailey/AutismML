@@ -46,13 +46,10 @@ We employ a combination of supervised learning techniques and neural network mod
 - Bootstrap
 - Sql
 
-## Installation
-
-how to install and run the project
 
 
 ## Usage
-The primary function of the website and target of the website 
+Critical components used for the project.
 
 ### CSV to SQLite Database Converter
 
