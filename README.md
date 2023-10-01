@@ -14,17 +14,16 @@ We employ a combination of supervised learning techniques and neural network mod
 - [Project Overview](#project-overview)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
 - [Usage](#usage)
   - [CSV to SQLite Database Converter](#csv-to-sqlite-database-converter)
 - [Data](#data)
 - [Machine Learning](#machine-learning)
 - [Data Visualization](#data-visualization)
-- [target audience] 
 - [Website](#website)
-- [License](#license)
+
 
 ## Project Overview
+
 
 
 
@@ -47,13 +46,10 @@ We employ a combination of supervised learning techniques and neural network mod
 - Bootstrap
 - Sql
 
-## Installation
-
-how to install and run the project
 
 
 ## Usage
-The primary function of the website and target of the website 
+Critical components used for the project.
 
 ### CSV to SQLite Database Converter
 
@@ -85,10 +81,6 @@ It imports data from the CSV file into the SQLite table, skipping the header row
 The script retrieves data from the SQLite database and displays it in a readable format.
 Data visualization using Matplotlib is supported but commented out. Uncomment the appropriate lines to enable data visualization.
 
-#### Customization
-
-- You can customize the script to work with different CSV files by changing the csv_file_path variable and the table structure.
-- Modify the code for data visualization to suit your specific needs.
 
 ## Data
 
@@ -102,8 +94,6 @@ Information gained from machine learning
 
 how we used the visualizations
 
-Target Audience
-## The primary function of the website and target of the website
 
 ## Website
 
