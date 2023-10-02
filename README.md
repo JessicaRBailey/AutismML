@@ -1,5 +1,5 @@
 # Autistic Spectrum Disorder Screening Predictor Model
-
+![Project Logo](Images/Walk23-hero-web.png)
 
 ## Introduction
 
@@ -22,6 +22,7 @@ Purpose: The main goal behind the project is to create a website with our findin
 - [Data](#data)
 - [Machine Learning](#machine-learning)
 - [Data Visualization](#data-visualization)
+- [Website](#website)
 - [Conclusion](#conclusion)
 
 
@@ -91,9 +92,14 @@ Neural Network:  We used tensorflow and keras to train a logistic regression mod
 Prior to creating machine learning models, we created visual analyses of the dataset using Tableau Public.  These visualizations show relationships between ethnicities, age, and sex.  Along with the results of correlation tests such as independent t-tests and Chi-squared, we recognized that these were not predictive and we therefore removed them from our final neural network model.  
 
 
-## License
+## Website 
+[Project_website_Hp](Images/HomePage.png)
 
-This script is provided under the MIT License.
+Our wesbite landpage is structured as a the following: Landing Page, Supervised Learning Model, Neural Network Model, Austism Screening Questions. 
+[Project_website_Survey](Images/image_survey.png)
+[Project_website_SurveyR](Images/image_survey_results.png)
+Here is a sample of the survey with and then the result page you might get once you complete it. 
+
 
 
 ## Conclusion
