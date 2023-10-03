@@ -20,8 +20,8 @@ Purpose: The main goal behind the project is to create a website with our findin
 - [Technologies Used](#technologies-used)
 - [CSV to SQLite Database Converter](#csv-to-sqlite-database-converter)
 - [Data](#data)
-- [Machine Learning](#machine-learning)
 - [Data Visualization](#data-visualization)
+- [Machine Learning](#machine-learning)
 - [Conclusion](#conclusion)
 
 
@@ -77,20 +77,18 @@ Survey Options:  Resources/survey_responses.db was created using the code in sur
 Data for this project came from Kaggle and can be found here:  https://www.kaggle.com/datasets/fabdelja/autism-screening-for-toddlers
 
 
-## Machine Learning
-
-Two machine learning models were compared.
-
-Supervised Learning:
-
-Neural Network:  We used tensorflow and keras to train a logistic regression model.  Our model used an input layer with 8 nodes and a ReLU activation function, one hidden layer also with 8 nodes and the ReLu activation function, and an output layer with 1 node and a sigmoid activation function.  We trained with all 10 survey questions and the age question.  This removed features that were not correlated with ASD traits and it allowed the use of this model to predict submissions from our website, which only asks for these 11 inputs.  Because all of these were integers, we did not need to use get_dummies or one_hot_encoding, however, we did scale our data so that the age question was not weighted too heavily.  We split our data set into training and testing data, used a binary_crossentropy loss function, and the adam optimizer.  We ran 50 epochs and evaluated both the training and testing data to ensure our model was not overfitting to the data set.  
-
-
 ## Data Visualization
 
 Prior to creating machine learning models, we created visual analyses of the dataset using Tableau Public.  These visualizations show relationships between ethnicities, age, and sex.  Along with the results of correlation tests such as independent t-tests and Chi-squared, we recognized that these were not predictive and we therefore removed them from our final neural network model.  
 
 
+## Machine Learning
+
+Two machine learning models were compared.
+
+Supervised Learning:We utilized all quantitative columns with the exception of the column that counts the number of “yes”s in questions #1 through #10 as that will count each question twice. We then scaled the entire dataset for the machine learning model so age can be appropriate incorporated into the model. We created a correlation heatmap and determined that no two questions were dependent of each other which means that all questions can and should be used for our model. Next, we utilized a random sampler module to ensure that our samples for the X and Y variables are distributed more evenly. We then trained and tested a logistic regression model. Lastly, to understand the accuracy and precision of the machine learning model, we printed a classification report. 
+
+Neural Network:  We used tensorflow and keras to train a logistic regression model.  Our model used an input layer with 8 nodes and a ReLU activation function, one hidden layer also with 8 nodes and the ReLu activation function, and an output layer with 1 node and a sigmoid activation function.  We trained with all 10 survey questions and the age question.  This removed features that were not correlated with ASD traits and it allowed the use of this model to predict submissions from our website, which only asks for these 11 inputs.  Because all of these were integers, we did not need to use get_dummies or one_hot_encoding, however, we did scale our data so that the age question was not weighted too heavily.  We split our data set into training and testing data, used a binary_crossentropy loss function, and the adam optimizer.  We ran 50 epochs and evaluated both the training and testing data to ensure our model was not overfitting to the data set.  
 
 
 
